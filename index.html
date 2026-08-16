@@ -65,7 +65,16 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      cursor: pointer;
+    }
+
+    .balance-card,
+    .wide,
+    .card,
+    .list-item,
+    .rocket-box {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px;
     }
 
     .balance-card {
@@ -74,8 +83,6 @@
         rgba(25,145,255,.30),
         rgba(117,71,255,.30)
       );
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 24px;
       padding: 22px;
       margin-bottom: 18px;
     }
@@ -98,19 +105,9 @@
     }
 
     .card {
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 20px;
       padding: 18px;
       min-height: 140px;
       cursor: pointer;
-      transition: .15s;
-    }
-
-    .card:active,
-    .action-btn:active,
-    .nav-item:active {
-      transform: scale(.98);
     }
 
     .icon {
@@ -130,11 +127,9 @@
       line-height: 1.45;
     }
 
-    .wide {
+    .wide,
+    .rocket-box {
       margin-top: 14px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 20px;
       padding: 18px;
     }
 
@@ -156,6 +151,10 @@
       border: 1px solid rgba(255,255,255,.12);
     }
 
+    .danger-btn {
+      background: linear-gradient(90deg, #ff5e5e, #ff2d78);
+    }
+
     .section-title {
       font-size: 28px;
       font-weight: 800;
@@ -170,13 +169,9 @@
       padding: 10px 14px;
       font-size: 15px;
       margin-bottom: 16px;
-      cursor: pointer;
     }
 
     .list-item {
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px;
       padding: 16px;
       margin-bottom: 12px;
     }
@@ -197,34 +192,65 @@
       opacity: .55;
     }
 
-    .profile-box {
-      text-align: center;
-      padding: 28px 20px;
-      background: rgba(255,255,255,.08);
+    .bet-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .bet-btn {
       border: 1px solid rgba(255,255,255,.12);
-      border-radius: 24px;
+      background: rgba(255,255,255,.08);
+      color: white;
+      border-radius: 14px;
+      padding: 12px 4px;
+      font-weight: 700;
     }
 
-    .profile-avatar {
-      width: 86px;
-      height: 86px;
-      border-radius: 28px;
-      background: linear-gradient(135deg, #1c91ff, #7547ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 42px;
-      margin: 0 auto 15px;
+    .bet-btn.selected {
+      background: linear-gradient(90deg, #1597ff, #7547ff);
     }
 
-    .profile-name {
-      font-size: 24px;
-      font-weight: 800;
+    .rocket-stage {
+      text-align: center;
+      padding: 28px 10px;
     }
 
-    .profile-username {
-      margin-top: 6px;
+    .rocket {
+      font-size: 72px;
+      margin-bottom: 12px;
+      transition: transform .2s;
+    }
+
+    .rocket.flying {
+      transform: translateY(-8px) rotate(-8deg);
+    }
+
+    .multiplier {
+      font-size: 48px;
+      font-weight: 900;
+    }
+
+    .rocket-status {
+      margin-top: 8px;
       color: #aebed0;
+    }
+
+    .history {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-top: 12px;
+      padding-bottom: 4px;
+    }
+
+    .history-item {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.08);
+      font-weight: 700;
     }
 
     .nav {
@@ -235,7 +261,7 @@
       width: calc(100% - 28px);
       max-width: 520px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       background: rgba(9, 22, 40, .94);
       border: 1px solid rgba(255,255,255,.12);
       border-radius: 22px;
@@ -247,24 +273,18 @@
     .nav-item {
       text-align: center;
       color: #9bb0c8;
-      font-size: 12px;
+      font-size: 11px;
       cursor: pointer;
     }
 
     .nav-item span {
       display: block;
-      font-size: 21px;
+      font-size: 20px;
       margin-bottom: 3px;
     }
 
     .nav-item.active {
       color: white;
-    }
-
-    .rank-number {
-      font-size: 22px;
-      font-weight: 800;
-      min-width: 35px;
     }
   </style>
 </head>
@@ -273,64 +293,95 @@
 
 <div class="app">
 
-  <!-- ГЛАВНАЯ -->
   <section id="homePage" class="page active">
-
     <div class="top">
       <div>
         <div class="title">Mix Fix ⚡</div>
         <div class="subtitle" id="welcome">Добро пожаловать</div>
       </div>
-
       <div class="avatar" onclick="openPage('profilePage')">👤</div>
     </div>
 
     <div class="balance-card">
-      <div class="label">Твой баланс</div>
+      <div class="label">Твой игровой баланс</div>
       <div class="balance" id="balanceHome">0 ⭐</div>
     </div>
 
     <div class="grid">
-
       <div class="card" onclick="openPage('tasksPage')">
         <div class="icon">🎯</div>
         <div class="card-title">Задания</div>
-        <div class="small">Выполняй задания и получай награды</div>
+        <div class="small">Выполняй задания и получай игровые ⭐</div>
+      </div>
+
+      <div class="card" onclick="openPage('rocketPage')">
+        <div class="icon">🚀</div>
+        <div class="card-title">Ракета</div>
+        <div class="small">Успей забрать до краша</div>
       </div>
 
       <div class="card" onclick="openPage('shopPage')">
         <div class="icon">🛍️</div>
         <div class="card-title">Магазин</div>
-        <div class="small">Покупай предметы за внутренние звёзды</div>
+        <div class="small">Покупай предметы за игровые ⭐</div>
       </div>
 
-      <div class="card" onclick="openPage('friendsPage')">
-        <div class="icon">👥</div>
-        <div class="card-title">Друзья</div>
-        <div class="small">Приглашай друзей и получай бонусы</div>
+      <div class="card" onclick="openPage('profilePage')">
+        <div class="icon">👤</div>
+        <div class="card-title">Профиль</div>
+        <div class="small">Баланс и данные профиля</div>
       </div>
-
-      <div class="card" onclick="openPage('ratingPage')">
-        <div class="icon">🏆</div>
-        <div class="card-title">Рейтинг</div>
-        <div class="small">Смотри таблицу лидеров</div>
-      </div>
-
     </div>
 
     <div class="wide">
       <div class="card-title">🎁 Ежедневная награда</div>
-      <div class="small">Раз в день можно получить 10 внутренних ⭐</div>
-
-      <button class="action-btn" onclick="claimDailyReward()">
-        Забрать +10 ⭐
-      </button>
+      <div class="small">Раз в день можно получить 10 игровых ⭐</div>
+      <button class="action-btn" onclick="claimDailyReward()">Забрать +10 ⭐</button>
     </div>
-
   </section>
 
 
-  <!-- ЗАДАНИЯ -->
+  <section id="rocketPage" class="page">
+    <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
+    <div class="section-title">🚀 Ракета</div>
+
+    <div class="balance-card">
+      <div class="label">Игровой баланс</div>
+      <div class="balance" id="balanceRocket">0 ⭐</div>
+    </div>
+
+    <div class="rocket-box">
+      <div class="rocket-stage">
+        <div id="rocketIcon" class="rocket">🚀</div>
+        <div id="multiplier" class="multiplier">1.00x</div>
+        <div id="rocketStatus" class="rocket-status">Выбери ставку и запусти</div>
+      </div>
+
+      <div class="label">Ставка</div>
+
+      <div class="bet-row">
+        <button class="bet-btn selected" onclick="selectBet(10, this)">10 ⭐</button>
+        <button class="bet-btn" onclick="selectBet(25, this)">25 ⭐</button>
+        <button class="bet-btn" onclick="selectBet(50, this)">50 ⭐</button>
+        <button class="bet-btn" onclick="selectBet(100, this)">100 ⭐</button>
+      </div>
+
+      <button id="startBtn" class="action-btn" onclick="startRocket()">
+        🚀 Запустить
+      </button>
+
+      <button id="cashoutBtn" class="action-btn danger-btn" onclick="cashOut()" style="display:none;">
+        💰 Забрать
+      </button>
+    </div>
+
+    <div class="wide">
+      <div class="card-title">Последние раунды</div>
+      <div id="history" class="history"></div>
+    </div>
+  </section>
+
+
   <section id="tasksPage" class="page">
     <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
     <div class="section-title">🎯 Задания</div>
@@ -339,44 +390,26 @@
       <div class="list-row">
         <div>
           <div class="card-title">Открыть Mix Fix</div>
-          <div class="small">Первое простое задание</div>
+          <div class="small">Первое задание</div>
         </div>
-        <div class="reward">+5 ⭐</div>
+        <div class="reward">+10 ⭐</div>
       </div>
-      <button class="action-btn" onclick="completeTask('task1', 5)">
-        Выполнить
-      </button>
+      <button class="action-btn" onclick="completeTask('task1', 10)">Выполнить</button>
     </div>
 
     <div id="task2" class="list-item">
       <div class="list-row">
         <div>
-          <div class="card-title">Посетить профиль</div>
-          <div class="small">Открой раздел профиля</div>
-        </div>
-        <div class="reward">+10 ⭐</div>
-      </div>
-      <button class="action-btn" onclick="completeTask('task2', 10)">
-        Выполнить
-      </button>
-    </div>
-
-    <div id="task3" class="list-item">
-      <div class="list-row">
-        <div>
-          <div class="card-title">Зайти в магазин</div>
-          <div class="small">Посмотри доступные предметы</div>
+          <div class="card-title">Сыграть в Ракету</div>
+          <div class="small">Запусти хотя бы один раунд</div>
         </div>
         <div class="reward">+15 ⭐</div>
       </div>
-      <button class="action-btn" onclick="completeTask('task3', 15)">
-        Выполнить
-      </button>
+      <button class="action-btn" onclick="completeTask('task2', 15)">Выполнить</button>
     </div>
   </section>
 
 
-  <!-- МАГАЗИН -->
   <section id="shopPage" class="page">
     <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
     <div class="section-title">🛍️ Магазин</div>
@@ -390,106 +423,26 @@
       <div class="list-row">
         <div>
           <div class="card-title">💎 VIP-значок</div>
-          <div class="small">Демонстрационный предмет</div>
+          <div class="small">Демо-предмет</div>
         </div>
         <div class="reward">50 ⭐</div>
       </div>
-      <button class="action-btn" onclick="buyItem('VIP-значок', 50)">
-        Купить
-      </button>
-    </div>
-
-    <div class="list-item">
-      <div class="list-row">
-        <div>
-          <div class="card-title">🔥 Огненная рамка</div>
-          <div class="small">Демонстрационный предмет</div>
-        </div>
-        <div class="reward">100 ⭐</div>
-      </div>
-      <button class="action-btn" onclick="buyItem('Огненная рамка', 100)">
-        Купить
-      </button>
+      <button class="action-btn" onclick="buyItem('VIP-значок', 50)">Купить</button>
     </div>
   </section>
 
 
-  <!-- ДРУЗЬЯ -->
-  <section id="friendsPage" class="page">
-    <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
-    <div class="section-title">👥 Друзья</div>
-
-    <div class="wide">
-      <div class="card-title">Пригласи друга</div>
-      <div class="small">
-        Пока это демонстрационная реферальная система.
-      </div>
-
-      <button class="action-btn" onclick="shareInvite()">
-        Поделиться Mix Fix
-      </button>
-    </div>
-
-    <div class="wide">
-      <div class="label">Приглашено друзей</div>
-      <div class="balance">0</div>
-    </div>
-  </section>
-
-
-  <!-- РЕЙТИНГ -->
-  <section id="ratingPage" class="page">
-    <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
-    <div class="section-title">🏆 Рейтинг</div>
-
-    <div class="list-item">
-      <div class="list-row">
-        <div class="rank-number">🥇</div>
-        <div style="flex:1">
-          <div class="card-title">MixMaster</div>
-          <div class="small">Игрок</div>
-        </div>
-        <div class="reward">500 ⭐</div>
-      </div>
-    </div>
-
-    <div class="list-item">
-      <div class="list-row">
-        <div class="rank-number">🥈</div>
-        <div style="flex:1">
-          <div class="card-title">FixPro</div>
-          <div class="small">Игрок</div>
-        </div>
-        <div class="reward">340 ⭐</div>
-      </div>
-    </div>
-
-    <div class="list-item">
-      <div class="list-row">
-        <div class="rank-number">🥉</div>
-        <div style="flex:1">
-          <div class="card-title">StarUser</div>
-          <div class="small">Игрок</div>
-        </div>
-        <div class="reward">210 ⭐</div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ПРОФИЛЬ -->
   <section id="profilePage" class="page">
     <button class="back-btn" onclick="openPage('homePage')">← Назад</button>
     <div class="section-title">👤 Профиль</div>
 
-    <div class="profile-box">
-      <div class="profile-avatar">👤</div>
-      <div class="profile-name" id="profileName">Пользователь</div>
-      <div class="profile-username" id="profileUsername">@username</div>
+    <div class="wide">
+      <div class="card-title" id="profileName">Пользователь</div>
+      <div class="small" id="profileUsername">@username</div>
     </div>
 
     <div class="wide">
-      <div class="label">Баланс</div>
+      <div class="label">Игровой баланс</div>
       <div class="balance" id="balanceProfile">0 ⭐</div>
     </div>
 
@@ -501,7 +454,6 @@
 </div>
 
 
-<!-- НИЖНЕЕ МЕНЮ -->
 <div class="nav">
   <div id="navHome" class="nav-item active" onclick="openPage('homePage')">
     <span>🏠</span>
@@ -511,6 +463,11 @@
   <div id="navTasks" class="nav-item" onclick="openPage('tasksPage')">
     <span>🎯</span>
     Задания
+  </div>
+
+  <div id="navRocket" class="nav-item" onclick="openPage('rocketPage')">
+    <span>🚀</span>
+    Ракета
   </div>
 
   <div id="navShop" class="nav-item" onclick="openPage('shopPage')">
@@ -531,7 +488,13 @@
 
   const user = tg.initDataUnsafe?.user;
 
-  let balance = Number(localStorage.getItem("mixfix_balance")) || 0;
+  let balance = Number(localStorage.getItem("mixfix_balance")) || 100;
+
+  let selectedBet = 10;
+  let currentMultiplier = 1;
+  let crashPoint = 0;
+  let rocketTimer = null;
+  let rocketRunning = false;
 
   if (user) {
     document.getElementById("welcome").textContent =
@@ -546,9 +509,9 @@
 
   function updateBalance() {
     document.getElementById("balanceHome").textContent = balance + " ⭐";
+    document.getElementById("balanceRocket").textContent = balance + " ⭐";
     document.getElementById("balanceShop").textContent = balance + " ⭐";
     document.getElementById("balanceProfile").textContent = balance + " ⭐";
-
     localStorage.setItem("mixfix_balance", balance);
   }
 
@@ -563,23 +526,154 @@
       item.classList.remove("active");
     });
 
-    if (pageId === "homePage") {
-      document.getElementById("navHome").classList.add("active");
-    }
-
-    if (pageId === "tasksPage") {
-      document.getElementById("navTasks").classList.add("active");
-    }
-
-    if (pageId === "shopPage") {
-      document.getElementById("navShop").classList.add("active");
-    }
-
-    if (pageId === "profilePage") {
-      document.getElementById("navProfile").classList.add("active");
-    }
+    if (pageId === "homePage") navHome.classList.add("active");
+    if (pageId === "tasksPage") navTasks.classList.add("active");
+    if (pageId === "rocketPage") navRocket.classList.add("active");
+    if (pageId === "shopPage") navShop.classList.add("active");
+    if (pageId === "profilePage") navProfile.classList.add("active");
 
     window.scrollTo(0, 0);
+  }
+
+  function selectBet(amount, button) {
+    if (rocketRunning) return;
+
+    selectedBet = amount;
+
+    document.querySelectorAll(".bet-btn").forEach(btn => {
+      btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+  }
+
+  function generateCrashPoint() {
+    const r = Math.random();
+
+    if (r < 0.35) {
+      return 1.05 + Math.random() * 0.65;
+    }
+
+    if (r < 0.75) {
+      return 1.7 + Math.random() * 2.3;
+    }
+
+    if (r < 0.95) {
+      return 4 + Math.random() * 6;
+    }
+
+    return 10 + Math.random() * 15;
+  }
+
+  function startRocket() {
+    if (rocketRunning) return;
+
+    if (balance < selectedBet) {
+      tg.showAlert("Недостаточно игровых ⭐");
+      return;
+    }
+
+    balance -= selectedBet;
+    updateBalance();
+
+    rocketRunning = true;
+    currentMultiplier = 1;
+    crashPoint = generateCrashPoint();
+
+    document.getElementById("rocketIcon").classList.add("flying");
+    document.getElementById("rocketStatus").textContent = "Ракета летит...";
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("cashoutBtn").style.display = "block";
+
+    rocketTimer = setInterval(() => {
+      currentMultiplier += 0.03 + currentMultiplier * 0.008;
+
+      document.getElementById("multiplier").textContent =
+        currentMultiplier.toFixed(2) + "x";
+
+      if (currentMultiplier >= crashPoint) {
+        crashRocket();
+      }
+    }, 100);
+  }
+
+  function cashOut() {
+    if (!rocketRunning) return;
+
+    clearInterval(rocketTimer);
+
+    const win = Math.floor(selectedBet * currentMultiplier);
+    balance += win;
+
+    updateBalance();
+
+    rocketRunning = false;
+
+    document.getElementById("rocketIcon").classList.remove("flying");
+    document.getElementById("rocketStatus").textContent =
+      "Забрано +" + win + " ⭐";
+
+    document.getElementById("cashoutBtn").style.display = "none";
+    document.getElementById("startBtn").style.display = "block";
+
+    addHistory(currentMultiplier.toFixed(2) + "x");
+
+    tg.HapticFeedback?.notificationOccurred("success");
+    tg.showAlert("Ты забрал " + win + " игровых ⭐");
+  }
+
+  function crashRocket() {
+    clearInterval(rocketTimer);
+
+    rocketRunning = false;
+
+    document.getElementById("rocketIcon").classList.remove("flying");
+    document.getElementById("rocketIcon").textContent = "💥";
+
+    document.getElementById("multiplier").textContent =
+      crashPoint.toFixed(2) + "x";
+
+    document.getElementById("rocketStatus").textContent =
+      "КРАШ! Ставка проиграна";
+
+    document.getElementById("cashoutBtn").style.display = "none";
+    document.getElementById("startBtn").style.display = "block";
+
+    addHistory(crashPoint.toFixed(2) + "x");
+
+    tg.HapticFeedback?.notificationOccurred("error");
+
+    setTimeout(() => {
+      document.getElementById("rocketIcon").textContent = "🚀";
+      document.getElementById("multiplier").textContent = "1.00x";
+      document.getElementById("rocketStatus").textContent =
+        "Выбери ставку и запусти";
+    }, 1800);
+  }
+
+  function addHistory(value) {
+    let history = JSON.parse(localStorage.getItem("mixfix_history") || "[]");
+
+    history.unshift(value);
+    history = history.slice(0, 10);
+
+    localStorage.setItem("mixfix_history", JSON.stringify(history));
+
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const history = JSON.parse(localStorage.getItem("mixfix_history") || "[]");
+    const box = document.getElementById("history");
+
+    box.innerHTML = "";
+
+    history.forEach(item => {
+      const el = document.createElement("div");
+      el.className = "history-item";
+      el.textContent = item;
+      box.appendChild(el);
+    });
   }
 
   function claimDailyReward() {
@@ -597,14 +691,14 @@
     updateBalance();
 
     tg.HapticFeedback?.notificationOccurred("success");
-    tg.showAlert("Получено +10 ⭐");
+    tg.showAlert("Получено +10 игровых ⭐");
   }
 
   function completeTask(taskId, reward) {
     const key = "mixfix_" + taskId;
 
     if (localStorage.getItem(key) === "done") {
-      tg.showAlert("Это задание уже выполнено");
+      tg.showAlert("Задание уже выполнено");
       return;
     }
 
@@ -619,15 +713,13 @@
     button.disabled = true;
 
     updateBalance();
-
-    tg.HapticFeedback?.notificationOccurred("success");
-    tg.showAlert("Получено +" + reward + " ⭐");
   }
 
   function restoreTasks() {
-    ["task1", "task2", "task3"].forEach(id => {
+    ["task1", "task2"].forEach(id => {
       if (localStorage.getItem("mixfix_" + id) === "done") {
         const task = document.getElementById(id);
+
         task.classList.add("done");
 
         const button = task.querySelector("button");
@@ -639,45 +731,25 @@
 
   function buyItem(name, price) {
     if (balance < price) {
-      tg.showAlert("Недостаточно ⭐");
+      tg.showAlert("Недостаточно игровых ⭐");
       return;
     }
 
     balance -= price;
     updateBalance();
 
-    tg.HapticFeedback?.notificationOccurred("success");
     tg.showAlert("Куплено: " + name);
   }
 
-  function shareInvite() {
-    const url = "https://t.me/MixFixOfficialBot/mixfix";
-    const text = "Зацени Mix Fix ⚡";
-
-    const shareUrl =
-      "https://t.me/share/url?url=" +
-      encodeURIComponent(url) +
-      "&text=" +
-      encodeURIComponent(text);
-
-    tg.openTelegramLink(shareUrl);
-  }
-
   function resetDemo() {
-    localStorage.removeItem("mixfix_balance");
-    localStorage.removeItem("mixfix_daily_reward");
-    localStorage.removeItem("mixfix_task1");
-    localStorage.removeItem("mixfix_task2");
-    localStorage.removeItem("mixfix_task3");
-
-    balance = 0;
+    localStorage.clear();
+    balance = 100;
     updateBalance();
-
-    tg.showAlert("Тестовый прогресс сброшен");
     location.reload();
   }
 
   restoreTasks();
+  renderHistory();
   updateBalance();
 </script>
 
