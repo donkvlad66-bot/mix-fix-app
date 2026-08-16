@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mix Fix</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #07111f, #0b2d52, #1b0f3a);
+      color: white;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 38px;
+      margin-top: 40px;
+    }
+
+    .subtitle {
+      color: #9fcfff;
+      margin-top: 8px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(12px);
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      border: none;
+      padding: 16px;
+      border-radius: 16px;
+      margin-top: 12px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(90deg, #168cff, #6b4cff);
+    }
+
+    .user {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .small {
+      color: #aebed0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <h1>Mix Fix ⚡</h1>
+    <div class="subtitle">Telegram Mini App</div>
+
+    <div class="card">
+      <div class="user" id="username">Привет 👋</div>
+      <div class="small">Добро пожаловать в Mix Fix</div>
+    </div>
+
+    <div class="card">
+      <h3>Главная</h3>
+      <button class="button" onclick="alert('Скоро здесь будет функция')">
+        Открыть
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>Профиль</h3>
+      <button class="button" onclick="showProfile()">
+        Мой профиль
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    const user = tg.initDataUnsafe?.user;
+
+    if (user) {
+      document.getElementById("username").textContent =
+        "Привет, " + (user.first_name || "пользователь") + " 👋";
+    }
+
+    function showProfile() {
+      if (user) {
+        alert(
+          "Имя: " + (user.first_name || "") +
+          "\nUsername: @" + (user.username || "нет")
+        );
+      } else {
+        alert("Открой приложение через Telegram");
+      }
+    }
+  </script>
+</body>
+</html>
