@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mix Fix</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -651,7 +651,13 @@
 <script>
   const tg = window.Telegram.WebApp;
   tg.expand();
+const SUPABASE_URL = "https://ctqycszfbapjmbcxdqud.supabase.co";
+const SUPABASE_KEY = "sb_publishable_uioy_QhQxSAxQ5niF-pbyA_sxWbVInL";
 
+const sb = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
   const user = tg.initDataUnsafe?.user;
 
   let balance = Number(localStorage.getItem("mixfix_balance")) || 100;
