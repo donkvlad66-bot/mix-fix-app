@@ -672,7 +672,7 @@ const sb = window.supabase.createClient(
   const user = tg.initDataUnsafe?.user;
 
   let balance = Number(localStorage.getItem("mixfix_balance")) || 100;
-
+let tonBalance = Number(localStorage.getItem("mixfix_ton") || 0);
   let selectedBet = 10;
   let currentMultiplier = 1;
   let crashPoint = 0;
@@ -699,7 +699,10 @@ const sb = window.supabase.createClient(
     document.getElementById("balanceShop").textContent = balance + " ⭐";
     document.getElementById("balanceProfile").textContent = balance + " ⭐";
     document.getElementById("ratingUserBalance").textContent = balance + " ⭐";
+document.getElementById("tonBalanceRocket").textContent =
+  tonBalance.toFixed(2) + " TON";
 
+localStorage.setItem("mixfix_ton", tonBalance);
     localStorage.setItem("mixfix_balance", balance);
   }
 
