@@ -359,8 +359,20 @@
     </div>
 
     <div class="balance-card">
-      <div class="label">Твой игровой баланс</div>
+  <div class="label">Твой игровой баланс</div>
+
+  <div style="display:flex; gap:22px; align-items:center; flex-wrap:wrap;">
+    <div>
+      <div class="small">⭐ Звёзды</div>
       <div class="balance" id="balanceHome">0 ⭐</div>
+    </div>
+
+    <div>
+      <div class="small">💎 TON</div>
+      <div class="balance" id="tonBalanceHome">0.00 TON</div>
+    </div>
+  </div>
+</div>
     </div>
 
     <div class="grid">
@@ -701,7 +713,8 @@ let tonBalance = Number(localStorage.getItem("mixfix_ton") || 0);
     document.getElementById("ratingUserBalance").textContent = balance + " ⭐";
 document.getElementById("tonBalanceRocket").textContent =
   tonBalance.toFixed(2) + " TON";
-
+document.getElementById("tonBalanceHome").textContent =
+  tonBalance.toFixed(2) + " TON";
 localStorage.setItem("mixfix_ton", tonBalance);
     localStorage.setItem("mixfix_balance", balance);
   }
